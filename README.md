@@ -38,10 +38,10 @@ After line release the winch will be in the **ARMED** state since the pilot/oper
 
 ## Remote controls
 There are two remote controls, 
-1. an android phone app that an operator can use when stood next to the winch operating on short (10 meters) range bluetooth, this is also used to configure the winch parameters above.
-2. a long range radio remote control running on 869MHz Lora modulation strapped to the pilots hand.
+1. An android phone app that an operator can use when stood next to the winch operating on short (10 meters) range bluetooth, this is also used to configure the winch parameters above. 
+2. A long range radio remote control running on 869MHz Lora modulation strapped to the pilots hand.
 
-At least one controller needs to be used to operate the winch but it is also ok to use both simultaneously (e.g. pilot in charge with operator override)
+At least one controller needs to be used to operate the winch but it is also ok to use both simultaneously (e.g. pilot in charge with operator override). Only one instance of each type of remote will be active at any one time, e.g. two operators cannot both use their phones to control the winch simultaneously.
 
 ### Data reported to remotes (both phone and hand control)
 * Current force -          the force being applied by the winch right now
