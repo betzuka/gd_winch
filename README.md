@@ -46,6 +46,9 @@ the winch manager for a set timeout (say 1 second) then it will release the moto
 then the machine is made safe. 
 
 The motor controller also has hard limits configured for protecting the battery and motor which it is continously monitoring. Should the motor controller itself fail the motor will in all likelyhood be released, or in the worst (extremely unlikely) 
-case the battery will shorted through the motor windings. In no case should the motor spin out of control as the commutator (the motor controller) has failed as this is a brushless 3 phase motor not a brushed DC motor (it is not possible for the brushless motor to be driven without a working controller). When this occurs an extremely 
+case the battery will be shorted through the motor windings. In no case should the motor spin out of control as the commutator (the motor controller) has failed as this is a brushless 3 phase motor not a brushed DC motor (it is not possible for the brushless motor to be driven without a working controller). When this occurs an extremely 
 high current will flow instantaneously, it may well melt the motor windings but it will definitely blow a high voltage (low arc) 200AMP fuse that is built into the battery assembly. The battery is capable of pushing well over 1000Amps so would be undamaged
 by such an event.
+
+## Possible failure points 
+The firmware running in the commercial motor controller could contain defects. The firmware is taken from the main stable release branch of the open source VESC project that is used worldwide by thousands of electric skateboard, efoil board and some industrial applications.
