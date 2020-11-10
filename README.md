@@ -24,8 +24,8 @@ After line release the winch will be in the **ARMED** state since the pilot/oper
 
 ## Remote controls
 There are two remote controls, 
-1. an android phone app that an operator can use when stood next to the winch, short (10 meters) range bluetooth, this is also used to configure the winch parameters above.
-2. a long range radio remote control running on 869MHz strapped to the pilots hand
+1. an android phone app that an operator can use when stood next to the winch operating on short (10 meters) range bluetooth, this is also used to configure the winch parameters above.
+2. a long range radio remote control running on 869MHz Lora modulation strapped to the pilots hand.
 
 At least one controller needs to be used to operate the winch but it is also ok to use both simultaneously (e.g. pilot in charge with operator override)
 
@@ -41,11 +41,11 @@ At least one controller needs to be used to operate the winch but it is also ok 
 ## Safety cutouts
 The system runs a deadman loop, this means that if the winch does not hear from either controller for set timeout (say 1 second) then it returns to the **ARMED** state if it was previously **LAUNCHING**. 
 
-The winch is managed by a small microcontroller (a tiny computer we'll call the winch manager) that manages all of the above. This communicates demand for motor torque to the motor controller which is a commercial unit. Should the motor controller not hear from
+The winch is managed by a small microcontroller (a tiny computer we'll call the winch manager) that manages all of the above and communication with the remotes. This communicates demand for motor torque to the motor controller (a commercial unit) over a hard wired connection. Should the motor controller not hear from
 the winch manager for a set timeout (say 1 second) then it will release the motor (all power removed), this in effect extends the deadman loop all the way from the motor through all intermediate systems, wiring and radio links to the remotes, should the loop be severed at any point 
 then the machine is made safe. 
 
 The motor controller also has hard limits configured for protecting the battery and motor which it is continously monitoring. Should the motor controller itself fail the motor will in all likelyhood be released, or in the worst (extremely unlikely) 
-case the battery will shorted through the motor windings. In no case will the motor spin out of control as the commutator (the motor controller) has failed and this is a brushless 3 phase motor not a brushed DC motor. When this occurs an extremely 
+case the battery will shorted through the motor windings. In no case should the motor spin out of control as the commutator (the motor controller) has failed as this is a brushless 3 phase motor not a brushed DC motor (it is not possible for the brushless motor to be driven without a working controller). When this occurs an extremely 
 high current will flow instantaneously, it may well melt the motor windings but it will definitely blow a high voltage (low arc) 200AMP fuse that is built into the battery assembly. The battery is capable of pushing well over 1000Amps so would be undamaged
 by such an event.
