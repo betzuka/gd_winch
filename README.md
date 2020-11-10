@@ -31,7 +31,7 @@ Note that during launch releasing the launch trigger will drop the force to **ar
 The winch will transition through the following states:
       
 * **IDLE** -       Initial state, winch applies **brakeForce** to the drum but ignores any requests to launch. Will accept requests to rewind line slowly onto drum for initial loading of drum or when packing up. This is the only state in which the winch can be configured.
-* **ARMED** -      Winch applies **armedWinchForce** to the line ready for launch, machine is now live and will accept requests to build to launch force. Winch can no longer be configured once armed.
+* **ARMED** -      Winch applies **armedWinchForce** to the line ready for launch, machine is now live and will accept requests to build to launch force. Winch can no longer be configured once armed. Winch can be returned to **IDLE** state if it is decided not to launch.
 * **LAUNCHING** -  Winch is ramping up to or already at **launchWinchForce**. Once pilot/operator exits launch sequence the state will return to **ARMED**.
 
 After line release the winch will be in the **ARMED** state since the pilot/operator has also released the launch trigger on their controller. The winch will now be pulling the line in with **armedWinchForce** until only **lineStopLength** meters of line remain at which point the winch will remove all force, the line will drop to the ground and the winch will engage **brakeForce** as it automatically returns to the **IDLE** state.
