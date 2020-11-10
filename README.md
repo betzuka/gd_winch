@@ -1,6 +1,6 @@
 # gd_winch
 
-## Configuration parameters:
+## Configuration parameters
 * **brakeForce** -        force winch applies to resist rotation (like a handbrake) when in IDLE state (to avoid birdsnest when walking out), pulling the line out will cause the battery to be re-charged. Setting this too high will make it very hard work walking out.
 * **armedWinchForce** -   a light force applied by the winch when it is in an armed state. This force should meet the following specifications:
   1. sufficient to take up the slack (not including the stretch) in the line prior to launch 
@@ -11,15 +11,16 @@
 * **rampTime** -          the time in seconds the winch will take to build tension when the launch is triggered.
 * **lineStopLength** -    the length in meters when the winch should stop rewinding and drop the remaining line to the ground, this is to avoid overwinding
 
-Note that during launch releasing the launch trigger will move to armedWinchForce and holding it again will move to launchWinchForce.
+Note that during launch releasing the launch trigger will drop the force to **armedWinchForce** and holding it again will ramp back up to **launchWinchForce**.
 
 ## States
 The winch will transition through the following states:
       
-* **IDLE** -       Initial state, winch applies **brakeForce** to the drum but ignores any requests to launch. Will accept requests to rewind line slowly onto drum for initial loading of drum or when packing up. 
-             This is the only state in which the winch can be configured.
+* **IDLE** -       Initial state, winch applies **brakeForce** to the drum but ignores any requests to launch. Will accept requests to rewind line slowly onto drum for initial loading of drum or when packing up. This is the only state in which the winch can be configured.
 * **ARMED** -      Winch applies **armedWinchForce** to the line ready for launch, machine is now live and will accept requests to build to launch force. Winch can no longer be configured once armed.
 * **LAUNCHING** -  Winch is ramping up to or already at **launchWinchForce**. Once pilot/operator exits launch sequence the state will return to **ARMED**.
+
+After line release the winch will be in the **ARMED** state since the pilot/operator has also released the launch trigger on their controller. The winch will now be pulling the line in with **armedWinchForce** until only **lineStopLength** meters of line remain at which point the winch will remove all force, the line will drop to the ground and the winch will engage **brakeForce** as it automatically returns to the **IDLE** state.
 
 ## Remote controls
 There are two remote controls, 
@@ -38,7 +39,7 @@ At least one controller needs to be used to operate the winch but it is also ok 
 
 
 ## Safety cutouts
-The system runs a deadman loop, this means that if the winch does not hear from either controller for set timeout (say 1 second) then it returns to the ARMED state if it was previously LAUNCHING. 
+The system runs a deadman loop, this means that if the winch does not hear from either controller for set timeout (say 1 second) then it returns to the **ARMED** state if it was previously **LAUNCHING**. 
 
 The winch is managed by a small microcontroller (a tiny computer we'll call the winch manager) that manages all of the above. This communicates demand for motor torque to the motor controller which is a commercial unit. Should the motor controller not hear from
 the winch manager for a set timeout (say 1 second) then it will release the motor (all power removed), this in effect extends the deadman loop all the way from the motor through all intermediate systems, wiring and radio links to the remotes, should the loop be severed at any point 
