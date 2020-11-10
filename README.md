@@ -1,4 +1,18 @@
-# gd_winch
+# Paraglider winch
+
+## Introduction
+This document describes the system behaviour of a battery powered electric static winch for launching paragliders, either with the assistance of an operator or with the pilot also acting as operator.
+
+At a high level the winch would be used as follows:
+1. Operator switches on the winch.
+2. Operator configures forces and other parameters for the type of launch.
+3. Pilot walks out with winch line to launch point.
+4. Pilot/Operator arms the winch and the winch takes up the slack.
+5. Pilot/Operator triggers the launch sequence and winch builds force and pulls them into the air.
+6. Pilot/Operator ends the launch sequence and releases the line if required.
+7. Winch rewinds remaining line and returns to initial state.
+
+The winch is a constant tension device, this means that it will apply a configured force to the line and maintain that force irrespective of ground or air speed. An extreme (dangerous) example of this would be launching in high wind results in a launch with negative ground speed. The winch only maintains the line tension it does not control the line speed which is dependent on glider, AUW, wind and thermic conditions.
 
 ## Configuration parameters
 * **brakeForce** -        force winch applies to resist rotation (like a handbrake) when in IDLE state (to avoid birdsnest when walking out), pulling the line out will cause the battery to be re-charged. Setting this too high will make it very hard work walking out.
@@ -50,5 +64,10 @@ case the battery will be shorted through the motor windings. In no case should t
 high current will flow instantaneously, it may well melt the motor windings but it will definitely blow a high voltage (low arc) 200AMP fuse that is built into the battery assembly. The battery is capable of pushing well over 1000Amps so would be undamaged
 by such an event.
 
-## Possible failure points 
-The firmware running in the commercial motor controller could contain defects. The firmware is taken from the main stable release branch of the open source VESC project that is used worldwide by thousands of electric skateboard, efoil board and some industrial applications.
+## Lockouts
+It is expected that lockouts could be less dangerous with this winch as it employs instantaneous tension control. When a glider starts to get sideways its drag will increase. On a normal winch some time is required to react to this additional drag which causes the tension in the line to increase further increasing the danger of the lockout. On a normal winch the procedure may require winch or vehicle to be stopped and the line to be cut which takes even more time. 
+
+On this winch, particularly when used in pilot/operator mode it would be expected at the first sign of lockout the pilot would release the launch trigger, the tension will be immediately reduced to **armedWinchForce** which should allow the pilot to recover. Importantly the winch tension is not dropped to zero nor the winch allowed to freewheel which would lead to birdsnests and the secondary danger of the line tangled around the winch itself.
+
+## Unknown risks
+The firmware running in the commercial motor controller could contain defects. The firmware is taken from the main stable release branch of the open source VESC project that is used worldwide by thousands of electric skateboard, efoil board, electric bikes and cars and some industrial applications.
